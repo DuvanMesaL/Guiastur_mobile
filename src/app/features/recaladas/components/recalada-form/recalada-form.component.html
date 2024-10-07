@@ -1,0 +1,61 @@
+<div class="recalada-form">
+  <h2 class="form-title">Nueva Recalada</h2>
+
+  <form (ngSubmit)="onSubmit()" *ngIf="recal">
+    <div class="form-group">
+      <ion-label>Buque</ion-label>
+      <ion-searchbar [(ngModel)]="searchTextBuque" name="searchTextBuque" (ionInput)="filterBuques($event)" placeholder="Buscar buque"></ion-searchbar>
+      <ion-select [(ngModel)]="recal.buque_id" name="buque_id" placeholder="Selecciona un buque" required>
+        <ion-select-option *ngFor="let buque of filteredBuques" [value]="buque.id">
+          {{ buque.nombre }}
+        </ion-select-option>
+      </ion-select>
+    </div>
+
+    <div class="form-group">
+      <ion-label>País</ion-label>
+      <ion-searchbar [(ngModel)]="searchTextPais" name="searchTextPais" (ionInput)="filterCountries($event)" placeholder="Buscar país"></ion-searchbar>
+      <ion-select [(ngModel)]="recal.pais_id" name="pais_id" placeholder="Selecciona un país" required>
+        <ion-select-option *ngFor="let pais of filteredCountries" [value]="pais.id">
+          {{ pais.nombre }}
+        </ion-select-option>
+      </ion-select>
+    </div>
+
+    <div class="form-group">
+      <h3>Fecha y Hora de Arribo</h3>
+      <div class="date-time-inputs">
+        <ion-input [(ngModel)]="fechaArribo.anio" name="anio_arribo" type="number" placeholder="AAAA" required></ion-input>
+        <ion-input [(ngModel)]="fechaArribo.mes" name="mes_arribo" type="number" placeholder="MM" required></ion-input>
+        <ion-input [(ngModel)]="fechaArribo.dia" name="dia_arribo" type="number" placeholder="DD" required></ion-input>
+        <ion-input [(ngModel)]="fechaArribo.hora" name="hora_arribo" type="number" placeholder="HH" required></ion-input>
+        <ion-input [(ngModel)]="fechaArribo.minutos" name="minutos_arribo" type="number" placeholder="MM" required></ion-input>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <h3>Fecha y Hora de Zarpe</h3>
+      <div class="date-time-inputs">
+        <ion-input [(ngModel)]="fechaZarpe.anio" name="anio_zarpe" type="number" placeholder="AAAA" required></ion-input>
+        <ion-input [(ngModel)]="fechaZarpe.mes" name="mes_zarpe" type="number" placeholder="MM" required></ion-input>
+        <ion-input [(ngModel)]="fechaZarpe.dia" name="dia_zarpe" type="number" placeholder="DD" required></ion-input>
+        <ion-input [(ngModel)]="fechaZarpe.hora" name="hora_zarpe" type="number" placeholder="HH" required></ion-input>
+        <ion-input [(ngModel)]="fechaZarpe.minutos" name="minutos_zarpe" type="number" placeholder="MM" required></ion-input>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <ion-label>Total de Turistas</ion-label>
+      <ion-input [(ngModel)]="recal.total_turistas" name="total_turistas" type="number" placeholder="Ej: 150" required></ion-input>
+    </div>
+
+    <div class="form-group">
+      <ion-label>Observaciones</ion-label>
+      <ion-textarea [(ngModel)]="recal.observaciones" name="observaciones" placeholder="Escribe alguna observación (opcional)"></ion-textarea>
+    </div>
+
+    <ion-button expand="block" type="submit" [disabled]="!recal.buque_id || !recal.pais_id || !recal.total_turistas || !isFechaArriboValida() || !isFechaZarpeValida()">
+      Crear Recalada
+    </ion-button>
+  </form>
+</div>

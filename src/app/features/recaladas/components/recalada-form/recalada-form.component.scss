@@ -1,0 +1,144 @@
+:host {
+  --ion-color-primary: #3880ff;
+  --ion-color-secondary: #3dc2ff;
+  --ion-color-tertiary: #5260ff;
+  --ion-color-success: #2dd36f;
+  --ion-color-warning: #ffc409;
+  --ion-color-danger: #eb445a;
+  --ion-color-medium: #92949c;
+  --ion-color-light: #f4f5f8;
+  --ion-color-dark: #222428;
+}
+
+.recalada-form {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 16px;
+  padding-bottom: 66px; // 50px for bottom navbar + 16px padding
+}
+
+.form-title {
+  font-size: 24px;
+  font-weight: 300;
+  color: var(--ion-color-dark);
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.form-group {
+  margin-bottom: 24px;
+}
+
+ion-label {
+  font-weight: 500;
+  color: var(--ion-color-medium);
+  margin-bottom: 8px;
+  display: block;
+}
+
+ion-searchbar {
+  --box-shadow: none;
+  --background: var(--ion-color-light);
+  --border-radius: 8px;
+  --placeholder-color: var(--ion-color-medium);
+  margin-top: 8px;
+}
+
+ion-select {
+  width: 100%;
+  max-width: 100%;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  margin-top: 8px;
+  border: 1px solid var(--ion-color-light);
+  border-radius: 8px;
+}
+
+h3 {
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--ion-color-dark);
+  margin-bottom: 12px;
+}
+
+.date-time-inputs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+
+  ion-input {
+    flex: 1;
+    min-width: 60px;
+  }
+}
+
+ion-input, ion-textarea {
+  --background: var(--ion-color-light);
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+  border-radius: 8px;
+}
+
+ion-textarea {
+  min-height: 100px;
+}
+
+ion-button {
+  margin-top: 24px;
+  --border-radius: 8px;
+  font-weight: 500;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+
+  &:not(:disabled):active {
+    transform: scale(0.98);
+  }
+}
+
+// Animations
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-group {
+  animation: fadeInUp 0.5s ease-out forwards;
+  opacity: 0;
+}
+
+@for $i from 1 through 10 {
+  .form-group:nth-child(#{$i}) {
+    animation-delay: #{$i * 0.05}s;
+  }
+}
+
+// Smooth transitions
+ion-searchbar, ion-select, ion-input, ion-textarea, ion-button {
+  transition: all 0.3s ease;
+
+  &:focus {
+    box-shadow: 0 0 0 2px rgba(var(--ion-color-primary-rgb), 0.2);
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 576px) {
+  .form-title {
+    font-size: 20px;
+  }
+
+  h3 {
+    font-size: 16px;
+  }
+
+  ion-label, ion-input, ion-textarea {
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "name": "guiastur-mobile",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

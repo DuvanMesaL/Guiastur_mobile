@@ -1,0 +1,29 @@
+<ion-content class="ion-padding">
+  <div class="login-container">
+    <div class="logo-container" [@logoAnimation]="logoState">
+      <ion-icon name="lock-closed" class="logo-icon"></ion-icon>
+    </div>
+    <h1 [@titleAnimation]="titleState">Welcome Back</h1>
+    <p [@subtitleAnimation]="subtitleState">Sign in to your account</p>
+    
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      <ion-item [@inputAnimation]="emailState" lines="full">
+        <ion-label position="floating">Email</ion-label>
+        <ion-input type="email" formControlName="email" (ionFocus)="onFocus('email')" (ionBlur)="onBlur('email')"></ion-input>
+      </ion-item>
+      
+      <ion-item [@inputAnimation]="passwordState" lines="full">
+        <ion-label position="floating">Password</ion-label>
+        <ion-input [type]="showPassword ? 'text' : 'password'" formControlName="password" (ionFocus)="onFocus('password')" (ionBlur)="onBlur('password')"></ion-input>
+        <ion-button fill="clear" slot="end" (click)="togglePassword()">
+          <ion-icon [name]="showPassword ? 'eye-off' : 'eye'"></ion-icon>
+        </ion-button>
+      </ion-item>
+      
+      <ion-button expand="block" type="submit" [disabled]="loginForm.invalid" class="login-button" [@buttonAnimation]="buttonState">
+        <ion-icon name="log-in" slot="start"></ion-icon>
+        Sign In
+      </ion-button>
+    </form>
+  </div>
+</ion-content>

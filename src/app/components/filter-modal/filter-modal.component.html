@@ -1,0 +1,19 @@
+
+      <ion-toolbar>
+        <ion-title>{{ title }}</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="dismissModal()">Cerrar</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+      <ion-list>
+        <ion-item *ngFor="let filter of filters">
+          <ion-label>{{ filter.label }}</ion-label>
+          <ion-select [(ngModel)]="filterValues[filter.key]">
+            <ion-select-option value="">Todos</ion-select-option>
+            <ion-select-option *ngFor="let option of filter.options" [value]="option.value">
+              {{ option.label }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+      <ion-button expand="block" (click)="applyFilters()">Aplicar Filtros</ion-button>
