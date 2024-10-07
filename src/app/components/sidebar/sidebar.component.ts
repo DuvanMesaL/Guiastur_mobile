@@ -3,20 +3,19 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-sidebar',
   template: `
-    <ion-menu contentId="main-content">
+    <ion-menu side="start" menuId="sidebarMenu" contentId="main-content">
       <ion-header>
         <ion-toolbar>
           <ion-title>Menú</ion-title>
         </ion-toolbar>
       </ion-header>
+
       <ion-content>
         <ion-list>
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-            <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
+            <ion-item [routerLink]="[p.url]" routerDirection="root"> <!-- Usa routerDirection -->
               <ion-icon slot="start" [name]="p.icon"></ion-icon>
-              <ion-label>
-                {{p.title}}
-              </ion-label>
+              <ion-label>{{p.title}}</ion-label>
             </ion-item>
           </ion-menu-toggle>
         </ion-list>

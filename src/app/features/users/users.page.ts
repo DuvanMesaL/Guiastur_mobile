@@ -3,10 +3,10 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-users',
   template: `
-    <ion-header class="ion-no-border">
+    <ion-header>
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-menu-button></ion-menu-button>
+          <ion-menu-button></ion-menu-button> <!-- Botón que abre el menú lateral -->
         </ion-buttons>
         <ion-title>Usuarios</ion-title>
       </ion-toolbar>

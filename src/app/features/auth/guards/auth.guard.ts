@@ -9,16 +9,18 @@ import { catchError, map } from 'rxjs/operators';
 })
 export class AuthGuard implements CanActivate {
 
-  constructor(private TokenService: TokenService, private router: Router) {}
+  constructor(private tokenService: TokenService, private router: Router) {}
 
   canActivate(): Observable<boolean> | Promise<boolean> | boolean {
-    if (this.TokenService.getCookie('auth_token')) {
+    const authToken = this.tokenService.getCookie('auth_token');
+
+    if (authToken) {
       return true;
     } else {
-      return this.TokenService.refreshToken().pipe(
+      return this.tokenService.refreshToken().pipe(
         map((response: any) => {
           if (response.token) {
-            this.TokenService.setAuthToken(response.token);
+            this.tokenService.setAuthToken(response.token);
             return true;
           } else {
             this.router.navigate(['/login']);

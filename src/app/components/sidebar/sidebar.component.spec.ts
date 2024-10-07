@@ -18,8 +18,8 @@ export class SidebarComponent {
     this.menu.close();
   }
 
-  navigateTo(section: string) {
-    this.router.navigate([`/${section}`]);
-    this.closeMenu();
+  async navigateTo(path: string) {
+    await this.menu.close();
+    this.router.navigate([path], { replaceUrl: true });
   }
 }
