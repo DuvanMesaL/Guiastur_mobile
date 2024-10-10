@@ -12,14 +12,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { BottomBarComponent } from './components/boottom-meu/boottom-meu.component';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AuthInterceptor } from './features/auth/interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [AppComponent, SidebarComponent, BottomBarComponent, ],
   imports: [BrowserModule, FormsModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, BrowserAnimationsModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy, },
+               {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
+             ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

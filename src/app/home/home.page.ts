@@ -7,11 +7,4 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  ionViewWillEnter() {
-    console.log('Home page is about to enter');
-  }
-
-  ionViewDidEnter() {
-    console.log('Home page has fully entered');
-  }
 }

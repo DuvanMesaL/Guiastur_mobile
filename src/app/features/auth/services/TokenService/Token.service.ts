@@ -13,6 +13,8 @@ export class TokenService {
 
   refreshToken(): Observable<any> {
     const refreshToken = this.getCookie('refresh_token');
+    console.log('Intentando refrescar token:', refreshToken);
+
     if (!refreshToken) {
       console.error('No se encontró el refresh_token');
       return throwError('No refresh_token found');
@@ -21,6 +23,7 @@ export class TokenService {
     return this.http.post(`${this.apiUrl}/refreshtoken.php`, { refresh_token: refreshToken }, { withCredentials: true })
       .pipe(
         tap((response: any) => {
+          console.log('Respuesta del servidor:', response);
           if (response && response.token) {
             this.setCookie('auth_token', response.token, 60);
           } else {

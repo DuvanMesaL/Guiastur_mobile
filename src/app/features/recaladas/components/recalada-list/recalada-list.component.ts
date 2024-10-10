@@ -64,7 +64,6 @@ export class RecaladasListComponent {
 
   async editPortCall(portCall: any) {
     console.log('Edit port call', portCall);
-    // Implement edit logic here
   }
 
   async cancelPortCall(portCall: any) {
@@ -80,7 +79,6 @@ export class RecaladasListComponent {
           text: 'Sí',
           handler: () => {
             console.log('Cancelling port call', portCall);
-            // Implement cancellation logic here
           }
         }
       ]

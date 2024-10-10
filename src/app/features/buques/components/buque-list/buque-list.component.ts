@@ -55,11 +55,11 @@ export class BuqueListComponent implements OnInit {
   loadShips() {
     this.getBuqueService.getBuques().subscribe(
       (response) => {
-        if (response.status === 'success' && Array.isArray(response.data.data)) {
-          this.ships = response.data.data;
+        if (response.status === 'success' && Array.isArray(response.data)) {
+          this.ships = response.data;
           this.filteredShips = [...this.ships];
         } else {
-          console.error('La API no devolvió un array en "data.data"');
+          console.error('La API no devolvió un array en "data"');
         }
       },
       (error) => {
