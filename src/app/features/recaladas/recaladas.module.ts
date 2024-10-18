@@ -8,6 +8,8 @@ import { RecaladasPageRoutingModule } from './recaladas-routing.module';
 
 import { RecaladasListComponent } from './components/recalada-list/recalada-list.component';
 import { RecaladasFormComponent } from './components/recalada-form/recalada-form.component';
+import { FilterModalComponent } from 'src/app/components/filter-modal/filter-modal.component';
+import { FilterButtonComponent } from 'src/app/components/filter-button-component/filter-button-component.component';
 
 import { RecaladasPage } from './recaladas.page';
 
@@ -18,7 +20,7 @@ import { RecaladasPage } from './recaladas.page';
     IonicModule,
     RecaladasPageRoutingModule
   ],
-  declarations: [RecaladasPage, RecaladasListComponent, RecaladasFormComponent],
+  declarations: [RecaladasPage, RecaladasListComponent, RecaladasFormComponent, FilterModalComponent, FilterButtonComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class RecaladasPageModule {}

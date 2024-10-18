@@ -1,0 +1,25 @@
+.form-group {
+    margin-bottom: 24px;
+    animation: fadeInUp 0.5s ease-out forwards;
+  }
+
+  ion-label {
+    font-weight: 500;
+    color: var(--ion-color-medium);
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  ion-searchbar, ion-select, ion-input, ion-textarea {
+    --background: var(--ion-color-light);
+    --padding-start: 16px;
+    --padding-end: 16px;
+    --padding-top: 12px;
+    --padding-bottom: 12px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+
+    &:focus {
+      box-shadow: 0 0 0 2px rgba(var(--ion-color-primary-rgb), 0.2);
+    }
+  }

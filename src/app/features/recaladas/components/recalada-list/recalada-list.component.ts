@@ -1,19 +1,34 @@
-import { Component } from '@angular/core';
-import { AlertController, ModalController } from '@ionic/angular';
-import { FilterModalComponent } from 'src/app/components/filter-modal/filter-modal.component';
+import { Component, OnInit } from '@angular/core';
+import { AlertController } from '@ionic/angular';
+import { GetrecaladaService } from '../../services/getServices/getrecalada.service';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-recaladas-list',
   template: `
+    <ion-toolbar>
+      <ion-title>Lista de Recaladas</ion-title>
+      <ion-buttons slot="end">
+        <app-filter-button
+          [filterOptions]="filterOptions"
+          (filterChange)="onFilterChange($event)">
+        </app-filter-button>
+      </ion-buttons>
+    </ion-toolbar>
+
     <ion-searchbar [(ngModel)]="searchTerm" (ionChange)="filterPortCalls()"></ion-searchbar>
 
     <ion-list>
       <ion-item-sliding *ngFor="let portCall of filteredPortCalls">
         <ion-item>
           <ion-label>
-            <h2>{{ portCall.buque }}</h2>
-            <p>Puerto: {{ portCall.puerto }}</p>
-            <p>Fecha: {{ portCall.fecha | date:'dd/MM/yyyy' }}</p>
+            <h2>{{ portCall.buque_nombre }}</h2>
+            <p>País: {{ portCall.pais_nombre }}</p>
+            <p>Fecha de Arribo: {{ portCall.fecha_arribo.date | date:'dd/MM/yyyy' }}</p>
+            <p>Fecha de Zarpe: {{ portCall.fecha_zarpe.date | date:'dd/MM/yyyy' }}</p>
+            <p>Total de Turistas: {{ portCall.total_turistas }}</p>
+            <p>Número de Atenciones: {{ portCall.numero_atenciones }}</p>
           </ion-label>
         </ion-item>
         <ion-item-options side="end">
@@ -27,39 +42,78 @@ import { FilterModalComponent } from 'src/app/components/filter-modal/filter-mod
       </ion-item-sliding>
     </ion-list>
 
-    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-      <ion-fab-button (click)="openFilters()">
-        <ion-icon name="options"></ion-icon>
-      </ion-fab-button>
-    </ion-fab>
+    <ion-spinner *ngIf="loading"></ion-spinner>
+    <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
   `
 })
-export class RecaladasListComponent {
-  portCalls = [
-    { id: 1, buque: "Buque 1", puerto: "Puerto A", fecha: "2023-06-15" },
-    { id: 2, buque: "Buque 2", puerto: "Puerto B", fecha: "2023-06-16" },
-    { id: 3, buque: "Buque 3", puerto: "Puerto C", fecha: "2023-06-17" },
-  ];
-
-  filteredPortCalls = [...this.portCalls];
+export class RecaladasListComponent implements OnInit {
+  portCalls: any[] = [];
+  filteredPortCalls: any[] = [];
   searchTerm = '';
-  filters = {
-    buque: '',
-    puerto: ''
-  };
+  filterOptions = ['Todos'];
+  loading = false;
+  errorMessage = '';
 
   constructor(
     private alertController: AlertController,
-    private modalController: ModalController
+    private getRecaladaService: GetrecaladaService
   ) {}
+
+  ngOnInit() {
+    console.log('ngOnInit se ha llamado');
+    this.loadRecaladas();
+  }
+
+  loadRecaladas() {
+    this.loading = true;
+    console.log('Cargando recaladas...');
+
+    this.getRecaladaService.getRecaladas()
+      .pipe(
+        catchError((error) => {
+          console.error('Error en la solicitud de recaladas:', error);
+          this.errorMessage = 'Ocurrió un error al obtener las recaladas.';
+          this.loading = false;
+          return of([]);
+        })
+      )
+      .subscribe((response) => {
+        console.log('Recaladas obtenidas:', response);
+
+        if (response && response.status === 'success' && Array.isArray(response.data.recaladas)) {
+          this.portCalls = response.data.recaladas;
+          this.filteredPortCalls = [...this.portCalls];
+          this.filterOptions = ['Todos', ...this.getUniqueBuquesAndPuertos()];
+        } else {
+          console.error('El dato recibido no es el esperado o no es un array:', response);
+          this.errorMessage = 'Los datos recibidos no tienen el formato esperado.';
+        }
+
+        this.loading = false;
+      });
+  }
+
+  getUniqueBuquesAndPuertos(): string[] {
+    const buques = Array.from(new Set(this.portCalls.map(pc => pc.buque)));
+    const puertos = Array.from(new Set(this.portCalls.map(pc => pc.puerto)));
+    return [...buques, ...puertos];
+  }
 
   filterPortCalls() {
     this.filteredPortCalls = this.portCalls.filter(portCall =>
-      (this.filters.buque === '' || portCall.buque === this.filters.buque) &&
-      (this.filters.puerto === '' || portCall.puerto === this.filters.puerto) &&
-      (portCall.buque.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-       portCall.puerto.toLowerCase().includes(this.searchTerm.toLowerCase()))
+      portCall.buque.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+      portCall.puerto.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
+  }
+
+  onFilterChange(selectedFilter: string) {
+    if (selectedFilter === 'Todos') {
+      this.filteredPortCalls = [...this.portCalls];
+    } else {
+      this.filteredPortCalls = this.portCalls.filter(portCall =>
+        portCall.buque === selectedFilter || portCall.puerto === selectedFilter
+      );
+    }
   }
 
   async editPortCall(portCall: any) {
@@ -85,43 +139,5 @@ export class RecaladasListComponent {
     });
 
     await alert.present();
-  }
-
-  async openFilters() {
-    const modal = await this.modalController.create({
-      component: FilterModalComponent,
-      componentProps: {
-        title: 'Filtrar Recaladas',
-        filters: [
-          {
-            key: 'buque',
-            label: 'Buque',
-            options: [
-              { value: 'Buque 1', label: 'Buque 1' },
-              { value: 'Buque 2', label: 'Buque 2' },
-              { value: 'Buque 3', label: 'Buque 3' }
-            ]
-          },
-          {
-            key: 'puerto',
-            label: 'Puerto',
-            options: [
-              { value: 'Puerto A', label: 'Puerto A' },
-              { value: 'Puerto B', label: 'Puerto B' },
-              { value: 'Puerto C', label: 'Puerto C' }
-            ]
-          }
-        ]
-      }
-    });
-
-    modal.onDidDismiss().then((result) => {
-      if (result.data) {
-        this.filters = result.data;
-        this.filterPortCalls();
-      }
-    });
-
-    return await modal.present();
   }
 }

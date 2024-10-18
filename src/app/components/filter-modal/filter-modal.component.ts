@@ -1,25 +1,33 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { PopoverController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-filter-modal',
-  template: './filter-modal.component.html'
+  selector: 'app-filter',
+  template: `
+    <ion-list>
+      <ion-radio-group (ionChange)="onFilterChange($event)">
+        <ion-list-header>
+          <ion-label>Selecciona un filtro</ion-label>
+        </ion-list-header>
+
+        <ion-item *ngFor="let option of filterOptions">
+          <ion-label>{{ option }}</ion-label>
+          <ion-radio slot="start" [value]="option"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+    </ion-list>
+  `
 })
 export class FilterModalComponent {
-  @Input() title: string = 'Filtrar';
-  @Input() filters: Array<{key: string, label: string, options: Array<{value: string, label: string}>}> = [];
-  @Output() filtersApplied = new EventEmitter<any>();
+  @Input() filterOptions: string[] = [];
+  @Output() filterChange = new EventEmitter<string>();
 
-  filterValues: {[key: string]: string} = {};
+  constructor(private popoverController: PopoverController) {}
 
-  constructor(private modalController: ModalController) {}
-
-  dismissModal() {
-    this.modalController.dismiss();
-  }
-
-  applyFilters() {
-    this.filtersApplied.emit(this.filterValues);
-    this.modalController.dismiss(this.filterValues);
+  onFilterChange(event: any) {
+    const selectedFilter = event.detail.value;
+    this.popoverController.dismiss({
+      selectedFilter: selectedFilter
+    });
   }
 }

@@ -1,0 +1,124 @@
+.atencion-form-container {
+    padding: 20px;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .atencion-form {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 30px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .form-title {
+    color: #333;
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-weight: 500;
+  }
+
+  .custom-input,
+  .custom-textarea,
+  .custom-datetime {
+    color: #333;
+    background: #fff;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+
+    &:focus {
+      outline: none;
+      border-color: #80bdff;
+      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+  }
+
+  .custom-datetime {
+    padding-left: 0;
+    --padding-start: 10px;
+    --padding-end: 10px;
+  }
+
+  .custom-textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  .submit-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: #0056b3;
+    }
+
+    &:active {
+      background-color: #004085;
+    }
+  }
+
+  // Estilos para el toast personalizado
+  .custom-toast {
+    --border-radius: 4px;
+    --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    font-weight: 500;
+  }
+
+  // Estilos para el loading personalizado
+  .custom-loading {
+    --background: rgba(255, 255, 255, 0.9);
+    --spinner-color: #007bff;
+
+    .loading-wrapper {
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  // Media query para ajustes en pantallas muy pequeñas
+  @media (max-width: 320px) {
+    .atencion-form {
+      padding: 20px;
+    }
+
+    .form-title {
+      font-size: 20px;
+    }
+
+    .custom-input,
+    .custom-textarea,
+    .custom-datetime,
+    .submit-button {
+      font-size: 14px;
+    }
+  }

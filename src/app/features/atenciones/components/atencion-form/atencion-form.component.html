@@ -1,0 +1,64 @@
+<div class="atencion-form-container">
+  <form (ngSubmit)="createAtencion()" class="atencion-form">
+    <h2 class="form-title">Nueva Atención</h2>
+
+    <div class="form-group">
+      <label for="fecha_inicio">Fecha de Inicio</label>
+      <ion-datetime
+        id="fecha_inicio"
+        [(ngModel)]="newAtencion.fecha_inicio"
+        name="fecha_inicio"
+        display-format="DD/MM/YYYY"
+        picker-format="DD MMMM YYYY"
+        cancelText="Cancelar"
+        doneText="Listo"
+        class="custom-datetime"
+      ></ion-datetime>
+    </div>
+
+    <div class="form-group">
+      <label for="fecha_cierre">Fecha de Cierre</label>
+      <ion-datetime
+        id="fecha_cierre"
+        [(ngModel)]="newAtencion.fecha_cierre"
+        name="fecha_cierre"
+        display-format="DD/MM/YYYY"
+        picker-format="DD MMMM YYYY"
+        cancelText="Cancelar"
+        doneText="Listo"
+        class="custom-datetime"
+      ></ion-datetime>
+    </div>
+
+    <div class="form-group">
+      <label for="total_turnos">Total de Turnos</label>
+      <input type="number" id="total_turnos" [(ngModel)]="newAtencion.total_turnos" name="total_turnos" class="custom-input">
+    </div>
+
+    <div class="form-group">
+      <label for="supervisor_id">Supervisor ID</label>
+      <input type="text" id="supervisor_id" [(ngModel)]="newAtencion.supervisor_id" name="supervisor_id" class="custom-input">
+    </div>
+
+    <div class="form-group">
+      <label for="recalada_id">Recalada ID</label>
+      <input type="number" id="recalada_id" [(ngModel)]="newAtencion.recalada_id" name="recalada_id" class="custom-input">
+    </div>
+
+    <div class="form-group">
+      <label for="observaciones">Observaciones</label>
+      <textarea
+        id="observaciones"
+        [(ngModel)]="newAtencion.observaciones"
+        name="observaciones"
+        rows="3"
+        placeholder="Ingrese sus observaciones aquí..."
+        class="custom-textarea"
+      ></textarea>
+    </div>
+
+    <button type="submit" class="submit-button">
+      Crear Atención
+    </button>
+  </form>
+</div>

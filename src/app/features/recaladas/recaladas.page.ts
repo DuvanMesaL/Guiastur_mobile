@@ -23,7 +23,7 @@ import { Component } from '@angular/core';
       </ion-segment>
 
       <div [ngSwitch]="selectedSegment">
-        <app-recalada-list *ngSwitchCase="'list'"></app-recalada-list>
+        <app-recaladas-list *ngSwitchCase="'list'"></app-recaladas-list>
         <app-recalada-form *ngSwitchCase="'create'"></app-recalada-form>
       </div>
     </ion-content>
