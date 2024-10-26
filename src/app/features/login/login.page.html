@@ -5,25 +5,23 @@
     </div>
     <h1 [@titleAnimation]="titleState">Welcome Back</h1>
     <p [@subtitleAnimation]="subtitleState">Sign in to your account</p>
-    
+
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
-      <ion-item [@inputAnimation]="emailState" lines="full">
-        <ion-label position="floating">Email</ion-label>
-        <ion-input type="email" formControlName="email" (ionFocus)="onFocus('email')" (ionBlur)="onBlur('email')"></ion-input>
-      </ion-item>
-      
-      <ion-item [@inputAnimation]="passwordState" lines="full">
-        <ion-label position="floating">Password</ion-label>
-        <ion-input [type]="showPassword ? 'text' : 'password'" formControlName="password" (ionFocus)="onFocus('password')" (ionBlur)="onBlur('password')"></ion-input>
-        <ion-button fill="clear" slot="end" (click)="togglePassword()">
-          <ion-icon [name]="showPassword ? 'eye-off' : 'eye'"></ion-icon>
-        </ion-button>
-      </ion-item>
-      
-      <ion-button expand="block" type="submit" [disabled]="loginForm.invalid" class="login-button" [@buttonAnimation]="buttonState">
-        <ion-icon name="log-in" slot="start"></ion-icon>
+      <div class="input-container" [@inputAnimation]="emailState">
+        <input id="email-input" type="email" formControlName="email" (focus)="onFocus('email')" (blur)="onBlur('email')" required>
+        <label for="email-input" [class.float]="emailState === 'focused' || loginForm.get('email')?.value">Email</label>
+      </div>
+
+      <div class="input-container" [@inputAnimation]="passwordState">
+        <input id="password-input" [type]="showPassword ? 'text' : 'password'" formControlName="password" (focus)="onFocus('password')" (blur)="onBlur('password')" required>
+        <label for="password-input" [class.float]="passwordState === 'focused' || loginForm.get('password')?.value">Password</label>
+        <ion-icon [name]="showPassword ? 'eye-off' : 'eye'" (click)="togglePassword()" class="password-toggle"></ion-icon>
+      </div>
+
+      <button type="submit" [disabled]="loginForm.invalid" class="login-button" [@buttonAnimation]="buttonState">
+        <ion-icon name="log-in" class="button-icon"></ion-icon>
         Sign In
-      </ion-button>
+      </button>
     </form>
   </div>
 </ion-content>

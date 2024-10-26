@@ -1,0 +1,17 @@
+<ion-content class="ion-padding">
+  <!-- Generar dinámicamente cada filtro según la configuración -->
+  <ng-container *ngFor="let filter of filters">
+    <ion-item *ngIf="filter.type === 'text'">
+      <ion-label>{{ filter.label }}</ion-label>
+      <ion-input [(ngModel)]="filter.value" placeholder="{{ filter.placeholder }}"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="filter.type === 'date'">
+      <ion-label>{{ filter.label }}</ion-label>
+      <ion-datetime [(ngModel)]="filter.value"></ion-datetime>
+    </ion-item>
+  </ng-container>
+
+  <!-- Botón para aplicar los filtros -->
+  <ion-button expand="full" (click)="applyFilter()">Aplicar filtro</ion-button>
+</ion-content>

@@ -1,100 +1,15 @@
-import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { LoadingController, ToastController } from '@ionic/angular';
 import { trigger, state, style, animate, transition } from '@angular/animations';
-import { AnimationController, LoadingController, ToastController } from '@ionic/angular';
 import { LoginService } from './services/loginService/login.service';
 import { TokenService } from '../auth/services/TokenService/Token.service';
 
 @Component({
   selector: 'app-login',
-  template: `
-    <ion-content class="ion-padding">
-      <div class="login-container">
-        <div class="logo-container" [@logoAnimation]="logoState">
-          <ion-icon name="lock-closed" class="logo-icon"></ion-icon>
-        </div>
-        <h1 [@titleAnimation]="titleState">Welcome Back</h1>
-        <p [@subtitleAnimation]="subtitleState">Sign in to your account</p>
-
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
-          <ion-item [@inputAnimation]="emailState" lines="full">
-            <ion-label position="floating">Email</ion-label>
-            <ion-input type="email" formControlName="email" (ionFocus)="onFocus('email')" (ionBlur)="onBlur('email')"></ion-input>
-          </ion-item>
-
-          <ion-item [@inputAnimation]="passwordState" lines="full">
-            <ion-label position="floating">Password</ion-label>
-            <ion-input [type]="showPassword ? 'text' : 'password'" formControlName="password" (ionFocus)="onFocus('password')" (ionBlur)="onBlur('password')"></ion-input>
-            <ion-button fill="clear" slot="end" (click)="togglePassword()">
-              <ion-icon [name]="showPassword ? 'eye-off' : 'eye'"></ion-icon>
-            </ion-button>
-          </ion-item>
-
-          <ion-button expand="block" type="submit" [disabled]="loginForm.invalid" class="login-button" [@buttonAnimation]="buttonState">
-            <ion-icon name="log-in" slot="start"></ion-icon>
-            Sign In
-          </ion-button>
-        </form>
-      </div>
-    </ion-content>
-  `,
-  styles: [`
-    .login-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    max-width: 400px;
-    margin: 0 auto;
-  }
-
-  .logo-container {
-    width: 100px;
-    height: 100px;
-    background: var(--ion-color-primary);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 2rem;
-  }
-
-  .logo-icon {
-    font-size: 3rem;
-    color: white;
-  }
-
-  .login-form {
-    width: 100%;
-  }
-
-  .login-button {
-    margin-top: 2rem;
-  }
-
-  ion-item {
-    --padding-start: 0;
-    --inner-padding-end: 0;
-    margin-bottom: 1rem;
-  }
-
-  ion-button[fill="clear"] {
-    --color: var(--ion-color-medium);
-  }
-
-  h1 {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-  }
-
-  p {
-    color: var(--ion-color-medium);
-    margin-bottom: 2rem;
-  }
-  `],
+  templateUrl: './login.page.html',
+  styleUrl: './login.page.scss',
   animations: [
     trigger('logoAnimation', [
       state('initial', style({ transform: 'scale(0.5) rotate(-45deg)', opacity: 0 })),
@@ -140,9 +55,8 @@ export class LoginPage implements OnInit {
     private formBuilder: FormBuilder,
     private loadingController: LoadingController,
     private toastController: ToastController,
-    private animationCtrl: AnimationController,
     private LoginService: LoginService,
-    private TokenService : TokenService,
+    private TokenService: TokenService,
     private router: Router
   ) {
     this.loginForm = this.formBuilder.group({
@@ -193,7 +107,7 @@ export class LoginPage implements OnInit {
       this.LoginService.login(email, password).subscribe(
         async response => {
           await loading.dismiss();
-          this.notificationMessage = 'Login exitoso';
+          this.notificationMessage = 'Login successful';
           this.notificationType = 'success';
 
           const authToken = response.token;
@@ -214,13 +128,13 @@ export class LoginPage implements OnInit {
               this.router.navigate(['/home'], { replaceUrl: true });
             }, 2000);
           } else {
-            this.notificationMessage = 'Login exitoso, pero los tokens no se encontraron.';
+            this.notificationMessage = 'Login successful, but tokens were not found.';
             this.notificationType = 'warning';
           }
         },
         async error => {
           await loading.dismiss();
-          this.notificationMessage = 'Login fallido. Verifica tus credenciales.';
+          this.notificationMessage = 'Login failed. Please check your credentials.';
           this.notificationType = 'error';
 
           const toast = await this.toastController.create({

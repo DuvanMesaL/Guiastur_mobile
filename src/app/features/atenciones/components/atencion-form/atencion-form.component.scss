@@ -86,26 +86,19 @@
     }
   }
 
-  // Estilos para el toast personalizado
   .custom-toast {
     --border-radius: 4px;
     --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     font-weight: 500;
   }
 
-  // Estilos para el loading personalizado
   .custom-loading {
     --background: rgba(255, 255, 255, 0.9);
     --spinner-color: #007bff;
 
-    .loading-wrapper {
-      border-radius: 8px;
-      padding: 20px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
+
   }
 
-  // Media query para ajustes en pantallas muy pequeñas
   @media (max-width: 320px) {
     .atencion-form {
       padding: 20px;

@@ -6,11 +6,12 @@
   height: 100%;
   max-width: 400px;
   margin: 0 auto;
+  padding: 0 20px;
 }
 
 .logo-container {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   background: var(--ion-color-primary);
   border-radius: 50%;
   display: flex;
@@ -20,35 +21,95 @@
 }
 
 .logo-icon {
-  font-size: 3rem;
+  font-size: 2.5rem;
   color: white;
-}
-
-.login-form {
-  width: 100%;
-}
-
-.login-button {
-  margin-top: 2rem;
-}
-
-ion-item {
-  --padding-start: 0;
-  --inner-padding-end: 0;
-  margin-bottom: 1rem;
-}
-
-ion-button[fill="clear"] {
-  --color: var(--ion-color-medium);
 }
 
 h1 {
   font-size: 2rem;
   font-weight: bold;
   margin-bottom: 0.5rem;
+  color: var(--ion-color-dark);
 }
 
 p {
   color: var(--ion-color-medium);
   margin-bottom: 2rem;
+}
+
+.login-form {
+  width: 100%;
+}
+
+.input-container {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+input {
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  color: var(--ion-color-dark);
+  border: none;
+  border-bottom: 1px solid var(--ion-color-medium);
+  outline: none;
+  background: transparent;
+  transition: border-color 0.2s;
+}
+
+input:focus {
+  border-color: var(--ion-color-primary);
+}
+
+label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px 0;
+  font-size: 16px;
+  color: var(--ion-color-medium);
+  pointer-events: none;
+  transition: 0.2s ease all;
+}
+
+input:focus ~ label,
+input:valid ~ label,
+label.float {
+  top: -20px;
+  font-size: 14px;
+  color: var(--ion-color-primary);
+}
+
+.password-toggle {
+  position: absolute;
+  right: 0;
+  top: 10px;
+  color: var(--ion-color-medium);
+  cursor: pointer;
+}
+
+.login-button {
+  width: 100%;
+  padding: 15px;
+  background-color: #0853f7;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+}
+
+.login-button:disabled {
+  background-color: #618ef0;
+  cursor: not-allowed;
+}
+
+.button-icon {
+  margin-right: 8px;
 }

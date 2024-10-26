@@ -6,45 +6,7 @@ import { of } from 'rxjs';
 
 @Component({
   selector: 'app-recaladas-list',
-  template: `
-    <ion-toolbar>
-      <ion-title>Lista de Recaladas</ion-title>
-      <ion-buttons slot="end">
-        <app-filter-button
-          [filterOptions]="filterOptions"
-          (filterChange)="onFilterChange($event)">
-        </app-filter-button>
-      </ion-buttons>
-    </ion-toolbar>
-
-    <ion-searchbar [(ngModel)]="searchTerm" (ionChange)="filterPortCalls()"></ion-searchbar>
-
-    <ion-list>
-      <ion-item-sliding *ngFor="let portCall of filteredPortCalls">
-        <ion-item>
-          <ion-label>
-            <h2>{{ portCall.buque_nombre }}</h2>
-            <p>País: {{ portCall.pais_nombre }}</p>
-            <p>Fecha de Arribo: {{ portCall.fecha_arribo.date | date:'dd/MM/yyyy' }}</p>
-            <p>Fecha de Zarpe: {{ portCall.fecha_zarpe.date | date:'dd/MM/yyyy' }}</p>
-            <p>Total de Turistas: {{ portCall.total_turistas }}</p>
-            <p>Número de Atenciones: {{ portCall.numero_atenciones }}</p>
-          </ion-label>
-        </ion-item>
-        <ion-item-options side="end">
-          <ion-item-option (click)="editPortCall(portCall)" color="primary">
-            <ion-icon slot="icon-only" name="create"></ion-icon>
-          </ion-item-option>
-          <ion-item-option (click)="cancelPortCall(portCall)" color="danger">
-            <ion-icon slot="icon-only" name="close-circle"></ion-icon>
-          </ion-item-option>
-        </ion-item-options>
-      </ion-item-sliding>
-    </ion-list>
-
-    <ion-spinner *ngIf="loading"></ion-spinner>
-    <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
-  `
+  templateUrl:'./recalada-list.component.html'
 })
 export class RecaladasListComponent implements OnInit {
   portCalls: any[] = [];
