@@ -1,37 +1,76 @@
-<ion-toolbar>
-  <ion-title>Lista de Recaladas</ion-title>
-  <ion-buttons slot="end">
-    <app-filter-button
-      [filterOptions]="filterOptions"
-      (filterChange)="onFilterChange($event)">
-    </app-filter-button>
-  </ion-buttons>
-</ion-toolbar>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Lista de Recaladas</ion-title>
+  </ion-toolbar>
+</ion-header>
 
-<ion-searchbar [(ngModel)]="searchTerm" (ionChange)="filterPortCalls()"></ion-searchbar>
+<div class="ion-padding">
+  <ion-segment (ionChange)="onSegmentChange($event)" [(ngModel)]="segmentValue" mode="ios">
+    <ion-segment-button value="buque">
+      <ion-label>Buque</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="puerto">
+      <ion-label>Puerto</ion-label>
+    </ion-segment-button>
+  </ion-segment>
 
-<ion-list>
-  <ion-item-sliding *ngFor="let portCall of filteredPortCalls">
-    <ion-item>
-      <ion-label>
-        <h2>{{ portCall.buque_nombre }}</h2>
-        <p>País: {{ portCall.pais_nombre }}</p>
-        <p>Fecha de Arribo: {{ portCall.fecha_arribo.date | date:'dd/MM/yyyy' }}</p>
-        <p>Fecha de Zarpe: {{ portCall.fecha_zarpe.date | date:'dd/MM/yyyy' }}</p>
-        <p>Total de Turistas: {{ portCall.total_turistas }}</p>
-        <p>Número de Atenciones: {{ portCall.numero_atenciones }}</p>
-      </ion-label>
-    </ion-item>
-    <ion-item-options side="end">
-      <ion-item-option (click)="editPortCall(portCall)" color="primary">
-        <ion-icon slot="icon-only" name="create"></ion-icon>
-      </ion-item-option>
-      <ion-item-option (click)="cancelPortCall(portCall)" color="danger">
-        <ion-icon slot="icon-only" name="close-circle"></ion-icon>
-      </ion-item-option>
-    </ion-item-options>
-  </ion-item-sliding>
-</ion-list>
+  <ion-item lines="none" class="ion-margin-top">
+    <ion-select [interfaceOptions]="{ header: 'Seleccionar ' + (segmentValue === 'buque' ? 'Buque' : 'Puerto') }"
+        [ngModel]="segmentValue === 'buque' ? selectedBuque : selectedPuerto"
+        (ionChange)="onSelectChange($event)"
+        placeholder="Seleccionar {{ segmentValue === 'buque' ? 'Buque' : 'Puerto' }}">
+    <ion-select-option value="">Todos</ion-select-option>
+    <ion-select-option *ngFor="let option of (segmentValue === 'buque' ? buques : puertos)" [value]="option">
+    {{ option }}
+    </ion-select-option>
+    </ion-select>
 
-<ion-spinner *ngIf="loading"></ion-spinner>
-<p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+  </ion-item>
+
+  <ion-searchbar [(ngModel)]="searchTerm"
+                 (ionChange)="onSearchChange()"
+                 placeholder="Buscar recaladas"
+                 animated="true"
+                 mode="ios"
+                 class="ion-margin-top">
+  </ion-searchbar>
+
+  <div class="ion-padding-vertical">
+    <ion-chip *ngFor="let filter of activeFilters" (click)="removeFilter(filter)" color="primary" outline="true">
+      <ion-label>{{ filter }}</ion-label>
+      <ion-icon name="close-circle"></ion-icon>
+    </ion-chip>
+    <ion-button *ngIf="activeFilters.length > 0"
+                (click)="clearFilters()"
+                fill="clear"
+                size="small">
+      Limpiar filtros
+    </ion-button>
+  </div>
+
+  <ion-list>
+    <ion-item-sliding *ngFor="let portCall of filteredPortCalls">
+      <ion-item>
+        <ion-label>
+          <h2>{{ portCall.buque_nombre }}</h2>
+          <p>País: {{ portCall.pais_nombre }}</p>
+          <p>Fecha de Arribo: {{ portCall.fecha_arribo.date | date:'dd/MM/yyyy' }}</p>
+          <p>Fecha de Zarpe: {{ portCall.fecha_zarpe.date | date:'dd/MM/yyyy' }}</p>
+          <p>Total de Turistas: {{ portCall.total_turistas }}</p>
+          <p>Número de Atenciones: {{ portCall.numero_atenciones }}</p>
+        </ion-label>
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-item-option (click)="editPortCall(portCall)" color="primary">
+          <ion-icon slot="icon-only" name="create"></ion-icon>
+        </ion-item-option>
+        <ion-item-option (click)="cancelPortCall(portCall)" color="danger">
+          <ion-icon slot="icon-only" name="close-circle"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <ion-spinner *ngIf="loading"></ion-spinner>
+  <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+</div>
