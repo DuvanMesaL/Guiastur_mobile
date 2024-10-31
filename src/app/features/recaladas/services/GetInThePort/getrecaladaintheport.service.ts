@@ -7,19 +7,19 @@ import { TokenService } from 'src/app/features/auth/services/TokenService/Token.
 @Injectable({
   providedIn: 'root'
 })
-export class GerecaladabybuqueService {
+export class GetrecaladaintheportService {
   private apiUrl = 'https://guiastur.test/guiastur/api/routes/Recaladas';
 
   constructor(private http: HttpClient, private tokenService: TokenService) {}
 
-  getRecaladasByBuque(buqueId: number): Observable<any> {
+  getRecaladas(): Observable<any> {
     const token = this.tokenService.getCookie('auth_token');
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
     });
 
-    return this.http.get(`${this.apiUrl}/GetRecaladasByBuque.php?buque_id=${buqueId}`, { headers, withCredentials: true })
+    return this.http.get(`${this.apiUrl}/GetRecaladasInThePort.php`, { headers, withCredentials: true })
       .pipe(catchError(this.handleError));
   }
 

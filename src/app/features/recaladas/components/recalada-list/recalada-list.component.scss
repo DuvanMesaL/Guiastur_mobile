@@ -1,0 +1,266 @@
+// Variables
+$background-primary: #ffffff;
+$background-secondary: #f8fafc;
+$background-tertiary: #f1f5f9;
+$border-color: #e2e8f0;
+$text-primary: #334155;
+$text-secondary: #64748b;
+$accent-color: var(--ion-color-primary);
+$success-color: #10b981;
+$warning-color: #f59e0b;
+$shadow-soft: rgba(0, 0, 0, 0.05);
+
+// Variables (mantener los existentes)
+$spacing-xs: 8px;
+$spacing-sm: 12px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+
+// Mixins
+@mixin card-base {
+  background-color: $background-primary;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px $shadow-soft;
+  overflow: hidden;
+}
+
+@mixin tap-highlight {
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:active {
+    background-color: $background-tertiary;
+  }
+}
+
+// Estilos globales
+.ion-Padding {
+  --background: #{$background-secondary};
+  padding: 30px;
+}
+
+// Estilos del segmento de filtro
+ion-segment {
+  margin-bottom: 16px;
+  --background: #{$background-primary};
+  border-radius: 8px;
+  box-shadow: 0 2px 4px $shadow-soft;
+
+  ion-segment-button {
+    --color: #{$text-secondary};
+    --color-checked: #{$accent-color};
+    --indicator-color: #{$accent-color};
+    min-width: 100px;
+    font-size: 14px;
+    text-transform: none;
+  }
+}
+
+.filter-options {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  margin-bottom: $spacing-lg;
+
+  .buque-select {
+    width: 100%;
+    --padding-start: #{$spacing-md};
+    --padding-end: #{$spacing-md};
+    --padding-top: #{$spacing-sm};
+    --padding-bottom: #{$spacing-sm};
+    --background: #{$background-tertiary};
+    --border-radius: #{$spacing-sm};
+    margin-bottom: $spacing-md;
+  }
+
+  .custom-searchbar {
+    --background: #{$background-tertiary};
+    --border-radius: #{$spacing-sm};
+    --box-shadow: none;
+    --color: #{$text-primary};
+    --placeholder-color: #{$text-secondary};
+    --icon-color: #{$text-secondary};
+    --padding-start: #{$spacing-md};
+    --padding-end: #{$spacing-md};
+    margin-bottom: $spacing-md;
+  }
+
+  ion-chip {
+    margin: 0;
+    padding: $spacing-xs $spacing-md;
+    height: 40px;
+    --background: #{$background-tertiary};
+    --color: #{$text-primary};
+
+    &.selected {
+      --background: #{$accent-color};
+      --color: #{$background-primary};
+    }
+
+    ion-icon {
+      margin-right: $spacing-xs;
+    }
+
+    ion-label {
+      font-size: 14px;
+    }
+  }
+}
+
+// Filtros activos
+.active-filters {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding: 8px 0;
+  margin-bottom: 16px;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filter-chip {
+    flex: 0 0 auto;
+    margin-right: 8px;
+    --background: #{$background-tertiary};
+    --color: #{$text-primary};
+    font-size: 12px;
+  }
+
+  .clear-filters {
+    --color: #{$accent-color};
+    font-weight: 500;
+    font-size: 12px;
+    height: 32px;
+    margin: 0;
+  }
+}
+
+// Lista de recaladas
+.port-calls-list {
+  background: transparent;
+  padding: 0 16px;
+}
+
+.port-call-item {
+  @include card-base;
+  @include tap-highlight;
+  margin-bottom: 16px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+  --background: #{$background-primary};
+
+  h2 {
+    font-size: 16px;
+    font-weight: 600;
+    color: $text-primary;
+    margin-bottom: 4px;
+  }
+
+  .status-badge {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: 12px;
+    margin-left: 8px;
+
+    &[color="success"] {
+      background-color: rgba($success-color, 0.1);
+      color: $success-color;
+    }
+
+    &[color="warning"] {
+      background-color: rgba($warning-color, 0.1);
+      color: $warning-color;
+    }
+  }
+}
+
+// Grid de detalles
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 8px;
+
+  span {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    color: $text-secondary;
+
+    ion-icon {
+      font-size: 14px;
+      margin-right: 4px;
+      color: $accent-color;
+    }
+  }
+}
+
+// Estados de carga y error
+.loading-error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+
+  ion-spinner {
+    color: $accent-color;
+  }
+}
+
+.error-message {
+  color: var(--ion-color-danger);
+  text-align: center;
+  padding: 16px;
+  font-size: 14px;
+}
+
+// Animaciones
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.port-call-item {
+  animation: fadeInUp 0.3s ease-out;
+}
+
+// Estilos para las opciones deslizantes
+ion-item-options {
+  border-radius: 0 12px 12px 0;
+  overflow: hidden;
+
+  ion-item-option {
+    font-size: 14px;
+    padding: 0 12px;
+
+    ion-icon {
+      font-size: 18px;
+    }
+  }
+}
+
+// Ajustes para pantallas más grandes
+@media (min-width: 768px) {
+  .filter-options, .active-filters, .port-calls-list {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .details-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
